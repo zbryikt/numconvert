@@ -1,7 +1,7 @@
 numconvert
 -----------------
 
-convert between Chinese numbers and Arabic numbers
+convert between Chinese numbers and Arabic numbers. This module is accompanied by a Google spreadsheet add-on availabel in [Chrome Web Store](https://chrome.google.com/webstore/detail/kghklbfbpbofhpbikkbbikgnbdnnjgcc?hl=zh-TW).
 
 
 Usage
