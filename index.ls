@@ -10,11 +10,13 @@ numconvert = do
     num: /^[零一二倆兩三四五六七八九十百千萬億兆京壹貳參肆伍陸柒捌玖拾佰仟0123456789]*$/
     num-uc: /[零壹貳倆兩參肆伍陸柒捌玖拾佰仟]/g
     num-lc: /[零一二三四五六七八九十百千]/g
+    num-ac: /\d/g
     arabic: /^\d*$/
   map:
     u2l:
       uc: "零壹貳倆兩參肆伍陸柒捌玖拾佰仟"
       lc: "零一二二二三四五六七八九十百千"
+      ac: "012223456789"
     lc: "零一二三四五六七八九十百千"
     uc: "零壹貳參肆伍陸柒捌玖拾佰仟"
 
@@ -59,4 +61,29 @@ numconvert = do
     if opt.uppercase => ret = @l2u(ret)
     ret
 
+  C2c: (str, opt) ->
+    if !str => return ""
+    if opt.dollar and @re.dollar.exec(str) =>
+      str = str.split(@re.dollar)
+      if str.length > 0 =>
+        num = @C2c(str.splice(0,1).0, opt)
+        return (["#num"] ++ str).join("元")
+    if !@isnum(str) => return str
+    str = str.replace(@re.num-uc, (a) ~> @map.u2l.lc.charAt(@map.u2l.uc.indexOf(a)))
+    str = str.replace(@re.num-ac, (a) ~> @map.u2l.lc.charAt(@map.u2l.ac.indexOf(a)))
+    return str
+
+  c2C: (str, opt) ->
+    if !str => return ""
+    if opt.dollar and @re.dollar.exec(str) =>
+      str = str.split(@re.dollar)
+      if str.length > 0 =>
+        num = @c2C(str.splice(0,1).0, opt)
+        return (["#num"] ++ str).join("元")
+    if !@isnum(str) => return str
+    str = str.replace(@re.num-lc, (a) ~> @map.u2l.uc.charAt(@map.u2l.lc.indexOf(a)))
+    str = str.replace(@re.num-ac, (a) ~> @map.u2l.uc.charAt(@map.u2l.ac.indexOf(a)))
+    return str
+
+if !module? => module = {}
 module.exports = numconvert

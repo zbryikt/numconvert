@@ -1,0 +1,18 @@
+{
+  "author": "zbryikt",
+  "name": "numconvert",
+  "description": "number conversion between Arabic and Chinese character, in Google spreadsheet",
+  "version": "0.0.1",
+  "homepage": "https://github.com/zbryikt/numconvert",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zbryikt/numconvert"
+  },
+  "engines": {
+    "node": ">=0.12.6",
+    "npm": ">=1.2.2"
+  },
+  "dependencies": {
+    "LiveScript": ">=1.2.0"
+  }
+}
