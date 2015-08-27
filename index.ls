@@ -18,8 +18,13 @@ numconvert = do
     lc: "零一二三四五六七八九十百千"
     uc: "零壹貳參肆伍陸柒捌玖拾佰仟"
 
-  c2a: (str)->
+  c2a: (str, opt = {})->
     if !str => return 1
+    if opt.dollar and @re.dollar.exec(str) =>
+      str = str.split(@re.dollar)
+      if str.length > 0 =>
+        num = @c2a(str.splice(0,1).0, opt)
+        return (["#num"] ++ str).join("元")
     if !@isnum(str) => return str
     str = str.replace(@re.num-uc, (a) ~> @map.u2l.lc.charAt(@map.u2l.uc.indexOf(a)))
     for i from 0 til @base.length
@@ -30,39 +35,28 @@ numconvert = do
         lower = (if str.1 => @c2a(str.1) else 0)
         if rate > 10 and str.1.length < 2 => lower *= rate/10
         return upper * rate + lower
-        #return @c2a(str.0) * @base[i].1 + (if str.1 => @c2a(str.1) else 0)
     return parseInt(str.replace(@re.num-lc, ((a) ~> return @map.lc.indexOf(a))))
 
-  c2a-dollar: (str) ->
-    if @re.dollar.exec(str) =>
-      str = str.split(@re.dollar)
-      if str.length > 0 =>
-        num = @c2a(str.splice 0,1 .0)
-        return (["#num"] ++ str).join("元")
-    else return @c2a(str)
-
   l2u: -> it.replace(@re.num-lc, (a) ~> @map.u2l.uc.charAt(@map.u2l.lc.indexOf(a)))
-  a2c: (num, isUpper = false) ->
+  a2c: (num, opt = {}) -> #isUpper = false) ->
+    if opt.dollar and @re.dollar.exec("#num") =>
+      num = "#num".split(@re.dollar)
+      if num.length > 0 =>
+        v = @a2c(num.splice(0,1).0, opt)
+        return (["#v"] ++ num).join("元")
+
     if !@re.arabic.exec("#num") => return num
     for i from 0 til @base.length =>
       if num >=  @base[i].1 =>
         num2 = num % @base[i].1
         num1 = Math.floor(num / @base[i].1)
         deco = if @base[i].1 > 10 and num2 > 0 and num2 < 10 => "零" else ""
-        ret = "#{@a2c(num1, isUpper)}#{@base[i].0}#deco#{@a2c(num2, isUpper)}"
-        if isUpper => ret = @l2u(ret)
+        ret = "#{@a2c(num1, opt)}#{@base[i].0}#deco#{@a2c(num2, opt)}"
+        if opt.uppercase => ret = @l2u(ret)
         return ret
     if num == 0 => return ""
     ret = @map.lc.charAt(num)
-    if isUpper => ret = @l2u(ret)
+    if opt.uppercase => ret = @l2u(ret)
     ret
-
-  a2c-dollar: (str, isUpper = false) ->
-    if @re.dollar.exec(str) =>
-      str = str.split(@re.dollar)
-      if str.length > 0 =>
-        num = @a2c(str.splice(0,1).0, isUpper)
-        return (["#num"] ++ str).join("元")
-    else return @a2c(str, isUpper)
 
 module.exports = numconvert
