@@ -1,0 +1,60 @@
+doctype html
+//- basic libraries: jquery(1.10.2), d3js(3.3.11), angularjs(1.2.3), bootstrap(3.0)/semantic-ui(0.9.3/0.9.5)
+//-                  fontawesome(4.4.0), reactjs(0.14.0)
+- var use = { cdn: true, og: false, favicon: true }
+- var lib = { jquery: true, d3js: false, angular: true, bootstrap: true, semantic: false, fontawesome: true, reactjs: true }
+- var assets = "assets"
+- var thumbnail = "thumbnail.png"
+- var favicon = "thumbnail.png"
+html(lang="en")
+  head(prefix="og: http://ogp.me/ns#")
+    meta(charset="utf-8")
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title template
+    // libraries
+    include library.jade
+    // custom files
+    link(rel="stylesheet",type="text/css",href="index.css")
+    script(type="text/javascript",src="clipboard.min.js")
+    script(type="text/javascript",src="numconvert.js")
+    script(type="text/javascript",src="index.js")
+  body
+    #root
+      .form
+        label.form-text 輸入阿拉伯數字或中文數字 ( 大小寫均可 )
+        .input-group
+          span.input-group-btn
+            .btn.btn-default.btn-lg(onclick="convert()",type="button") 轉換
+          input#input.input-lg.form-control(type="text",placeholder="例如: 65535",onclick="sel('input')",
+          onchange="convert()",onkeyup="convert()")
+      br
+      .form
+        label.form-text 以下是轉換後的結果
+        .input-group
+          span.input-group-btn
+            #copy.btn.btn-default.btn-lg(onclick="convert()",type="button",
+            data-clipboard-target="#output") 拷貝
+          input#output.input-lg.form-control(type="text",placeholder="例如: 65535",onclick="sel('output')")
+      hr
+      #options
+        #bigcheck.checkbox(onclick="check('bigcheck')"): label
+          input(type="checkbox",onclick="convert()")
+          span 我要轉成大寫
+          .mask(onclick="return false")
+        #c2c.checkbox(onclick="check('c2c')"): label
+          input(type="checkbox",onclick="convert()")
+          span 我要中文大小互轉
+          .mask(onclick="return false")
+        .checkbox(style="width:10px;padding-left:0;padding-right:0"): label &nbsp;
+        #ndr.radio(onclick="check('ndr',true)"): label
+          input(type="radio",name="dr",onclick="convert()",checked)
+          span 純數字
+        #ntd.radio(onclick="check('ntd',true)"): label
+          input(type="radio",name="dr",onclick="convert()")
+          span 新臺幣
+        #rmb.radio(onclick="check('rmb',true)"): label
+          input(type="radio",name="dr",onclick="convert()")
+          span 人民幣
+        #hkd.radio(onclick="check('hkd',true)"): label
+          input(type="radio",name="dr",onclick="convert()")
+          span 港幣

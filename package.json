@@ -1,5 +1,5 @@
 {
-  "author": "zbryikt",
+  "author": "Kirby Wu",
   "name": "numconvert",
   "description": "number conversion between Arabic and Chinese character, in Google spreadsheet",
   "version": "0.0.1",
@@ -13,6 +13,10 @@
     "npm": ">=1.2.2"
   },
   "dependencies": {
-    "LiveScript": ">=1.2.0"
+    "LiveScript": ">=1.2.0",
+    "jade": "=1.11.0",
+    "chokidar": "=1.0.3",
+    "stylus": "=0.50.0",
+    "uglify-js": "=2.4.16"
   }
 }

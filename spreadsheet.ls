@@ -1,4 +1,4 @@
-onOpen = (e) ->
+function onOpen(e) =>
   SpreadsheetApp.get-ui!create-addon-menu!
     .add-item "轉換選取範圍 ( 中轉數 )", "_c2a"
     .add-item "轉換選取範圍 ( 數轉中/小寫 )", "_a2c"
@@ -7,7 +7,7 @@ onOpen = (e) ->
     .add-item "轉換選取範圍 ( 大中轉小中  )", "_C2c"
     .add-to-ui!
 
-onInstall = (e) -> onOpen e
+function onInstall(e) => onOpen e
 
 _C2c = ->
   range = SpreadsheetApp.get-active-sheet!get-active-range!
@@ -47,8 +47,8 @@ _a2c = (cap = false) ->
 
 _a2cCap = -> _a2c true
 
-function a2C(value) => numconvert.a2c value, {dollar: true, uppercase: true}
+function a2cCap(value) => numconvert.a2c value, {dollar: true, uppercase: true}
 function a2c(value) => numconvert.a2c value, {dollar: true, uppercase: false}
 function c2a(value) => numconvert.c2a value, {dollar: true}
-function c2C(value) => numconvert.c2C value, {dollar: true}
-function C2c(value) => numconvert.C2c value, {dollar: true}
+function c2cCap(value) => numconvert.c2C value, {dollar: true}
+function cCap2c(value) => numconvert.C2c value, {dollar: true}
