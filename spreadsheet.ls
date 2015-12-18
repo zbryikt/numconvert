@@ -7,9 +7,10 @@ onOpen = (e) ->
     .add-item "轉換選取範圍 ( 大中轉小中  )", "C2c"
     .add-to-ui!
 
+
 onInstall = (e) -> onOpen e
 
-C2c = ->
+function C2c =>
   range = SpreadsheetApp.get-active-sheet!get-active-range!
   data = range.get-values!
   for i from 0 til data.length
@@ -18,7 +19,7 @@ C2c = ->
       data[i][j] = numconvert.C2c src, {dollar: true}
   range.setValues(data)
 
-c2C = ->
+function c2C =>
   range = SpreadsheetApp.get-active-sheet!get-active-range!
   data = range.get-values!
   for i from 0 til data.length
@@ -27,7 +28,7 @@ c2C = ->
       data[i][j] = numconvert.c2C src, {dollar: true}
   range.setValues(data)
 
-c2a = ->
+function c2a =>
   range = SpreadsheetApp.get-active-sheet!get-active-range!
   data = range.get-values!
   for i from 0 til data.length
@@ -36,8 +37,8 @@ c2a = ->
       data[i][j] = numconvert.c2a src, {dollar: true}
   range.setValues(data)
 
-a2cCap = -> a2c true
-a2c = (cap=false) ->
+function a2cCap => a2c true
+function a2c(cap = false)
   range = SpreadsheetApp.get-active-sheet!get-active-range!
   data = range.get-values!
   for i from 0 til data.length
