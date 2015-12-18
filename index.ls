@@ -45,6 +45,7 @@ numconvert = do
       num = "#num".split(@re.dollar)
       if num.length > 0 =>
         v = @a2c(num.splice(0,1).0, opt)
+        if opt.uppercase => v = @l2u(v)
         return (["#v"] ++ num).join("元")
 
     if !@re.arabic.exec("#num") => return num

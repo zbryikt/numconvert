@@ -45,6 +45,8 @@ _a2c = (cap = false) ->
       data[i][j] = numconvert.a2c src, {dollar: true, uppercase: cap}
   range.setValues(data)
 
+_a2cCap = -> _a2c true
+
 function a2C(value) => numconvert.a2c value, {dollar: true, uppercase: true}
 function a2c(value) => numconvert.a2c value, {dollar: true, uppercase: false}
 function c2a(value) => numconvert.c2a value, {dollar: true}
