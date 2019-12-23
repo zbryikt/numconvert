@@ -50,6 +50,7 @@ numconvert = do
 
     if !@re.arabic.exec("#num") => return num
     for i from 0 til @base.length =>
+      if opt.partial and @base[i].1 <= 10 => continue
       if num >=  @base[i].1 =>
         num2 = num % @base[i].1
         num1 = Math.floor(num / @base[i].1)
@@ -58,7 +59,7 @@ numconvert = do
         if opt.uppercase => ret = @l2u(ret)
         return ret
     if num == 0 => return ""
-    ret = @map.lc.charAt(num)
+    ret = if !opt.partial => @map.lc.charAt(num) else num
     if opt.uppercase => ret = @l2u(ret)
     ret
 
