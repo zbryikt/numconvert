@@ -42,6 +42,7 @@
 
     l2u: -> it.replace(@re.num-lc, (a) ~> @map.u2l.uc.charAt(@map.u2l.lc.indexOf(a)))
     a2c: (num, opt = {}) -> #isUpper = false) ->
+      if num == 0 => return if opt.partial => "0" else "零"
       if opt.dollar and @re.dollar.exec("#num") =>
         num = "#num".split(@re.dollar)
         if num.length > 0 =>
@@ -51,7 +52,7 @@
 
       if !@re.arabic.exec("#num") => return num
       for i from 0 til @base.length =>
-        if opt.partial and @base[i].1 <= 10 => continue
+        if opt.partial and ((opt.partial == true and @base[i].1 <= 10) or !(@base[i].0 in opt.partial)) => continue
         if num >=  @base[i].1 =>
           num2 = num % @base[i].1
           num1 = Math.floor(num / @base[i].1)
