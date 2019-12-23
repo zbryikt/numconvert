@@ -52,7 +52,10 @@
 
       if !@re.arabic.exec("#num") => return num
       for i from 0 til @base.length =>
-        if opt.partial and ((opt.partial == true and @base[i].1 <= 10) or !(opt.partial != true and (@base[i].0 in opt.partial))) => continue
+        if opt.partial and (
+          (opt.partial == true and @base[i].1 <= 10) or 
+          (opt.partial != true and !(@base[i].0 in opt.partial))
+        ) => continue
         if num >=  @base[i].1 =>
           num2 = num % @base[i].1
           num1 = Math.floor(num / @base[i].1)
