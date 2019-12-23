@@ -41,12 +41,12 @@
       return parseInt(str.replace(@re.num-lc, ((a) ~> return @map.lc.indexOf(a))))
 
     l2u: -> it.replace(@re.num-lc, (a) ~> @map.u2l.uc.charAt(@map.u2l.lc.indexOf(a)))
-    a2c: (num, opt = {}) -> #isUpper = false) ->
-      if num == 0 => return if opt.partial => "0" else "零"
+    a2c: (num, opt = {}, inner = false) -> #isUpper = false) ->
+      if num == 0 => return if inner => '' else (if opt.partial => "0" else "零")
       if opt.dollar and @re.dollar.exec("#num") =>
         num = "#num".split(@re.dollar)
         if num.length > 0 =>
-          v = @a2c(num.splice(0,1).0, opt)
+          v = @a2c(num.splice(0,1).0, opt, true)
           if opt.uppercase => v = @l2u(v)
           return (["#v"] ++ num).join("元")
 
@@ -57,7 +57,7 @@
           num2 = num % @base[i].1
           num1 = Math.floor(num / @base[i].1)
           deco = if @base[i].1 > 10 and num2 > 0 and num2 < 10 => "零" else ""
-          ret = "#{@a2c(num1, opt)}#{@base[i].0}#deco#{@a2c(num2, opt)}"
+          ret = "#{@a2c(num1, opt, true)}#{@base[i].0}#deco#{@a2c(num2, opt, true)}"
           if opt.uppercase => ret = @l2u(ret)
           return ret
       if num == 0 => return ""
